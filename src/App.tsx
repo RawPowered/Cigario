@@ -71,6 +71,14 @@ export function App(){
   return <div className="app-frame">
     <div className="app-shell">
       <div className="demo-ribbon"><span className="ribbon-dot"/> INTERNAL DEMO · FICTIONAL CATALOG · LOCAL DATA</div>
+      <aside className="desktop-sidebar" aria-label="Desktop navigation">
+        <Brand/>
+        <p className="desktop-sidebar-label">MY COLLECTION</p>
+        <nav aria-label="Desktop application destinations">{nav.map(n=><button key={n.tab} onClick={()=>navigate(n.screen)} className={tab===n.tab?'selected':''} aria-current={tab===n.tab?'page':undefined}><n.icon size={20} strokeWidth={1.7}/>{n.label}</button>)}</nav>
+        <div className="desktop-sidebar-spacer"/>
+        <div className="desktop-sidebar-summary"><span>MY HUMIDOR</span><strong>{currentTotal} cigars</strong><small>{active.length} active lots</small><small>Illustrative MSRP · {money(msrpTotal)}</small></div>
+        <p className="desktop-sidebar-status">INTERNAL DEMO<br/>Fictional catalog · Local records</p>
+      </aside>
       <div className="app-content" key={screen}>
         {screen==='home'&&<div className="home-screen">
           <Heading title="Discover" right={<button className="icon-button" aria-label="About this demo" onClick={()=>navigate('account')}><CircleHelp size={21}/></button>}/>
