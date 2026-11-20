@@ -1,7 +1,10 @@
 # Cigario architecture & trust boundaries
 
 ## Current foundation
-The app is an interactive, strictly local demonstration. All example cigars are fictitious. `src/store.ts` holds demo lots, append-only stock events and journal entries in device localStorage; **localStorage is not production-grade durability, security, sync or backup**. The scanner permits camera or image upload preview only; it does not identify anything yet.
+The repository contains a public website at `/`, a responsive web app at `/app/`, Capacitor mobile source, and a PHP/MariaDB API at `/api/v1/`. `src/cloud.ts` supports same-origin browser sessions and account inventory once a real backend is deployed and configured. This is an **unhosted implementation foundation**, not a live synchronized product. Local demo entries remain fictional and stored in localStorage when disconnected; the scanner does not identify cigar bands. Native credential-safe sync is not yet implemented.
+
+## Shared infrastructure
+The web browser and future native clients use HTTPS to access one server API; MariaDB is never exposed to clients. The hosting document root contains static compiled assets and the PHP API endpoint; credentials remain outside that root. The SQL migration contains users, catalog provenance, lots, stock events, review and auth tables. Default registration is disabled, and no fake catalog data is migrated.
 
 ## Intended production
 ```mermaid

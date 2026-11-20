@@ -2,6 +2,7 @@
 declare(strict_types=1);
 
 // Cigario v1 API: PHP 8.2+, MariaDB. Deploy with its private config OUTSIDE public_html.
+ini_set('display_errors', '0');
 header('Content-Type: application/json; charset=utf-8');
 header('Cache-Control: no-store');
 header('X-Content-Type-Options: nosniff');
@@ -76,7 +77,7 @@ function owner(PDO $pdo): string {
 }
 function requireWriteToken(): void { if (bearer() === null) csrf(); }
 function validId(mixed $value): string {
-    if (!is_string($value) || !preg_match('/^[a-f0-9-]{36}$/i', $value)) respond(422, ['error' => 'Invalid UUID']);
+    if (!is_string($value) || !preg_match('/^[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$/i', $value)) respond(422, ['error' => 'Invalid UUID']);
     return $value;
 }
 function strField(array $data, string $field, int $limit = 255, bool $required = true): string {

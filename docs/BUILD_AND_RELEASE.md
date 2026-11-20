@@ -13,6 +13,9 @@ npx cap sync
 ```
 Capacitor projects are generated locally and are not represented as already built in this repository. For Android open the project with `npx cap open android`; on macOS use `npx cap open ios`. Set unique signed application IDs, privacy disclosures, and assets before distribution.
 
+## Combined website and API build
+Run `npm run build` and verify both `dist/index.html` and `dist/app/index.html`. The website, browser application and native Capacitor app share source code but not runtime identity. Upload built static assets to the domain root and the server's `index.php` separately under `api/v1/`. Import `server/database/001_initial.sql` into MariaDB and keep private config outside public_html. Full instructions: `docs/WEBSITE_AND_DATABASE.md`.
+
 ## Release sequence
 1. Compare actual iPhone and Android screenshots to `docs/DESIGN_LOCK.md` and the CEO-approved reference.
 2. Replace sample records with permissioned, sourced catalog material; verify prices and metadata.

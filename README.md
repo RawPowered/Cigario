@@ -2,7 +2,7 @@
 
 **Adult-oriented cigar catalog and private humidor inventory.** A mobile-first product for **iPhone, Android, and the web**, built around a CEO-approved six-screen design.
 
-> **Status:** Foundation / internal prototype. This repository is not an app-store-approved application, a tobacco retailer, or a deployed cloud service. Demo records are fictional and local-only.
+> **Status:** Dual-entry website + web application, shared PHP/MariaDB API foundation, and Capacitor mobile source. **Not deployed or production-certified.** The local demo remains fictional; web account/inventory sync activates only after a properly configured backend and real catalog exist.
 
 ## Product flow
 **Home → Search / Scan → Cigar Detail → Add to Humidor → My Humidor → Item Review / Journal**
@@ -11,10 +11,11 @@ The UI is governed by [the locked design contract](docs/DESIGN_LOCK.md). Visual 
 
 ## Architecture
 - **Mobile app:** React + TypeScript + Vite; Capacitor builds for Android and iOS.
-- **Web fallback:** the same frontend can be deployed as a static site/PWA.
-- **Early backend target:** PHP 8 + MariaDB on affordable shared hosting; not yet integrated.
+- **Public website:** `/` is the SEO-ready informational landing page.
+- **Web application:** `/app/` is a responsive desktop/laptop and phone browser experience with an optional signed-in cloud account.
+- **Backend:** `server/public/api/v1/index.php` and `server/database/001_initial.sql` provide the first PHP 8.2+/MariaDB shared API. **No server is deployed.**
 - **Image recognition:** separate future adapter for OCR / catalog search / optionally Gemini; no inference claimed in the demo.
-- **Inventory:** local prototype persists on device; future server writes must be authenticated, idempotent, and event-sourced.
+- **Inventory:** local demo records persist on-device; a configured web account loads separate server-owned lots, idempotent acquisition/stock events and reviews. **Native secure-token sync is still pending.**
 
 ## Local start
 ```bash
@@ -25,6 +26,10 @@ For a release web build:
 ```bash
 npm run build
 ```
+The build targets two entry pages: `dist/index.html` (public website) and `dist/app/index.html` (web application). Native Capacitor loads the same root bundle and detects the native platform to open the app instead of the public site.
+
+**Hosting and database setup:** [Website + API deployment guide](docs/WEBSITE_AND_DATABASE.md). **API reference:** [server/public/api/v1](server/public/api/v1/README.md).
+
 For native scaffolds (after installing Xcode on macOS for iPhone or Android Studio for Android):
 ```bash
 npx cap add android

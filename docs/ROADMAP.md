@@ -5,6 +5,11 @@ Deliverable: reusable visual tokens, six core screen journeys, sample catalog, i
 
 **Gate:** source present and reviewed. The following are **not yet demonstrated**: npm installation, typecheck/build on a clean machine, iPhone/Android execution, visual pixel matching to the original raster and camera access on real devices.
 
+## Stage 0.5 — Website and shared API (repository foundation)
+- Added public responsive website, desktop sidebar/wide inventory UI, and `/app/` browser route.
+- Added central PHP API, MariaDB migration, browser account form, and initial remote inventory calls.
+- **Pending:** hosted Namecheap setup, clean npm build, backend database integration tests, database backups, account email verification/recovery, and native secure-token sync.
+
 ## Stage 1 — Visual acceptance and native shells
 - Add the exact approved PNG to `design/reference/` (checksum pinned in README).
 - Replace CSS-drawn demo cigars with licensed, optimized WebP/AVIF imagery matching approval.
