@@ -49,3 +49,9 @@ The initial requirements come from the Cigario planning Markdown, flowcharts, ap
 ## Offline V0.3 prototype (Android & iPhone-ready web source)
 
 The standalone, no-hosting, no-network application source, image assets, tests and experimental debug APK builder are versioned in [`offline/v0.3/`](offline/v0.3/README.md). V0.3 supports multiple humidors, provenance-based stock adjustments and transfers, editable acquisition metadata, advanced journal notes, and offline backup/export. It is **an internal test shell, not the production React/Capacitor application**. See [`offline/v0.3/qa/VALIDATION.md`](offline/v0.3/qa/VALIDATION.md) for device-signing and testing limitations.
+
+## Cigario Atelier V0.4 — Luxury UIX prototype
+
+The latest **offline luxury visual pass** is under [`offline/v0.4/`](offline/v0.4/README.md). It preserves the forest/ivory/bronze design contract and V0.3 data model while enhancing imagery, typography, visual hierarchy, tactile controls, focus states and a thumb-reach action dock on the catalog detail and acquisition screens. It includes Android experimental packaging source, an offline web/PWA entry, regression tests and browser visual QA.
+
+**Status:** offline demonstrator, not a released native iPhone/Android application. Real-device visual fidelity and install tests remain pending. The broader React/Capacitor production implementation under `src/` still requires consolidation with the offline test shell.
