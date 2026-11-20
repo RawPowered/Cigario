@@ -1,0 +1,9 @@
+{
+  "name": "Cigario — My Humidor",
+  "short_name": "Cigario",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#101a15",
+  "theme_color": "#101a15",
+  "icons": [{"src":"./icon.svg","sizes":"any","type":"image/svg+xml","purpose":"any maskable"}]
+}

@@ -1,0 +1,13 @@
+node_modules/
+dist/
+.vite/
+.env
+.env.*
+!.env.example
+android/.gradle/
+android/local.properties
+ios/App/Pods/
+ios/App/App.xcworkspace/xcuserdata/
+*.log
+.DS_Store
+coverage/
