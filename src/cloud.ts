@@ -57,7 +57,7 @@ export async function cloudInventory(): Promise<Store> {
 }
 export async function cloudCatalog(): Promise<Cigar[]> {
   const result = await request<{catalog: Array<Omit<Cigar,'msrpCents'> & {msrpCents: number|null}>}>('/catalog');
-  return result.catalog.map(c => ({ ...c, msrpCents: c.msrpCents ?? 0 }));
+  return result.catalog as Cigar[];
 }
 export async function cloudAddLot(lot: Lot, mutationId: string): Promise<void> {
   await request('/lots','POST',{ ...lot, mutationId });

@@ -1,7 +1,7 @@
 export type Cigar = {
   id: string; name: string; origin: string; vitola: string; size: string;
   wrapper: string; binder: string; filler: string; strength: number;
-  notes: string[]; description: string; msrpCents: number; tone: 'dark' | 'light' | 'medium';
+  notes: string[]; description: string; msrpCents: number | null; tone: 'dark' | 'light' | 'medium';
 };
 export type Lot = {
   id: string; cigarId: string; acquiredAt: string; location: string; source: string;

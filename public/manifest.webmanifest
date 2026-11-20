@@ -1,7 +1,8 @@
 {
   "name": "Cigario — My Humidor",
   "short_name": "Cigario",
-  "start_url": "./",
+  "start_url": "/app/",
+  "scope": "/app/",
   "display": "standalone",
   "background_color": "#101a15",
   "theme_color": "#101a15",
