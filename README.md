@@ -46,3 +46,6 @@ This is **not a purchase/affiliate/giveaway app**. App-store approval is uncerta
 The initial requirements come from the Cigario planning Markdown, flowcharts, approved UI mockup, and a read-only review of RawGraded's public architecture. **Do not copy TCG grading algorithms into cigar identification.** Reuse engineering patterns only, and keep the separate application independent.
 
 **© Cigario project.** Repository licensing and ownership must be agreed by the principals before third-party code is contributed or the application is distributed.
+## Offline V0.3 prototype (Android & iPhone-ready web source)
+
+The standalone, no-hosting, no-network application source, image assets, tests and experimental debug APK builder are versioned in [`offline/v0.3/`](offline/v0.3/README.md). V0.3 supports multiple humidors, provenance-based stock adjustments and transfers, editable acquisition metadata, advanced journal notes, and offline backup/export. It is **an internal test shell, not the production React/Capacitor application**. See [`offline/v0.3/qa/VALIDATION.md`](offline/v0.3/qa/VALIDATION.md) for device-signing and testing limitations.
