@@ -1,5 +1,5 @@
 'use strict';
-/* Cigario v0.2 — offline prototype, no network dependencies. All catalog entries are fictional. */
+/* Cigario v0.3 — offline prototype, no network dependencies. All catalog entries are fictional. */
 const svgPaths={
  leaf:'<path d="M20 4C9 4 4 10 4 19c9 0 15-6 16-15Z"/><path d="M4 20C8 15 12 11 20 4"/>',
  search:'<circle cx="11" cy="11" r="7"/><path d="m16 16 5 5"/>',
