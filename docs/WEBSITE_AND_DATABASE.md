@@ -26,7 +26,7 @@ Web login uses an HttpOnly Secure SameSite=Lax session cookie, same-origin reque
 
 ## Production limitations today
 
-The public landing and desktop-responsive web app are source-complete but not hosted. The existing app uses fictional browser-local demonstration records. Cloud login and database-backed synchronization are not yet connected to the React UI. The API contains a first implementation of user-owned inventory operations, but needs further integration, tests, security review and recovery rehearsal before real user records are allowed. No domain, hosting, SSL or active database was configured here.
+The public landing and desktop-responsive web app are source-complete but not hosted. The existing app uses fictional browser-local demonstration records. The React website now includes a same-origin account form and browser-to-API inventory operations, but these flows **have not been tested against a deployed MariaDB installation**. The API contains a first implementation of user-owned inventory operations, but needs further integration, tests, security review and recovery rehearsal before real user records are allowed. No domain, hosting, SSL or active database was configured here.
 
 ## Safety & operations
 

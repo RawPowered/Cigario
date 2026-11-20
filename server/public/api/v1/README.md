@@ -14,4 +14,4 @@
 
 All requests and responses are JSON. Mutating browser requests require `X-CSRF-Token` returned by `/auth/csrf`; authenticated native requests will use the bearer token once secure OS storage and app integration are implemented. There is no operator login console or catalog editor yet. Catalog is empty by default, and no demo identities or seed data are silently imported.
 
-**Unfinished:** frontend cloud account/sync adapter; secure native token storage; production security/load/restore reviews; email verification and password recovery; native authentication and production deploy. The routes and schema are an implementation foundation, not a certified production service.
+**Unfinished:** deployed browser authentication and synchronization validation; secure native token storage; production security/load/restore reviews; email verification and password recovery; native authentication and production deploy. The routes and schema are an implementation foundation, not a certified production service.
