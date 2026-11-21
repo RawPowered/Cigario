@@ -211,18 +211,18 @@ app.addEventListener('submit',ev=>{
   const before={acquired:l.acquired,price:l.price,source:l.source,location:l.location,format:l.format,notes:l.notes};
   const after={acquired:date,price:p,source:value('source'),location:value('location'),format:value('format'),notes:value('notes')};
   const keys=Object.keys(before).filter(k=>before[k]!==after[k]);if(!keys.length){notify('No metadata changes to save.');return;}
-  Object.assign(l,after);db.events.push({id:uuid(),lotId:l.id,delta:0,date:TODAY(),kind:'Corrected details',source:reason+' · Fields: '+keys.join(', ')});save();st.reviewTab='history';nav('lot');notify('Changes saved with an audit entry.');return;
+  Object.assign(l,after);db.events.push({id:uuid(),lotId:l.id,delta:0,date:TODAY(),kind:'Corrected details',source:reason+' · Fields: '+keys.join(', '),meta:{before,after,reason}});save();st.reviewTab='history';nav('lot');notify('Changes saved with an audit entry.');return;
  }
  if(f.id==='transfer-form'){
   const l=currentLot(),count=Number(value('quantity')),dest=value('destination'),loc=value('location'),note=value('note');
   if(!l||!Number.isSafeInteger(count)||count<1||count>stock(l.id)||!db.humidors.some(h=>h.id===dest)||dest===l.humidorId){notify('Check destination and transfer quantity.');return;}
-  const from=locLabel(l),to=getHumidor(dest).name+(loc?' · '+loc:'');const tx=uuid();
+  const from=locLabel(l),to=getHumidor(dest).name+(loc?' · '+loc:'');const tx=uuid();const transferMeta={from:{humidorId:l.humidorId,location:l.location},to:{humidorId:dest,location:loc},quantity:count,note};
   if(count===stock(l.id)){
-   l.humidorId=dest;l.location=loc;db.events.push({id:uuid(),tx,lotId:l.id,delta:0,date:TODAY(),kind:'Transferred',source:from+' → '+to+(note?' · '+note:'')});
+   l.humidorId=dest;l.location=loc;db.events.push({id:uuid(),tx,lotId:l.id,delta:0,date:TODAY(),kind:'Transferred',source:from+' → '+to+(note?' · '+note:''),meta:transferMeta});
   }else{
    const linked={...l,id:uuid(),qty:count,humidorId:dest,location:loc,originLotId:l.id,price:null,allocatedCost:l.price===null?null:Math.round(l.price*count/l.qty),notes:l.notes};
    db.lots.unshift(linked);
-   db.events.push({id:uuid(),tx,lotId:l.id,delta:-count,date:TODAY(),kind:'Transfer out',source:to+(note?' · '+note:'')},{id:uuid(),tx,lotId:linked.id,delta:count,date:TODAY(),kind:'Transfer in',source:from+' · Origin lot '+l.id+(note?' · '+note:'')});
+   db.events.push({id:uuid(),tx,lotId:l.id,delta:-count,date:TODAY(),kind:'Transfer out',source:to+(note?' · '+note:''),meta:transferMeta},{id:uuid(),tx,lotId:linked.id,delta:count,date:TODAY(),kind:'Transfer in',source:from+' · Origin lot '+l.id+(note?' · '+note:''),meta:transferMeta});
    st.lotId=linked.id;
   }
   save();st.reviewTab='history';nav('lot');notify('Transfer recorded in the audit history.');return;

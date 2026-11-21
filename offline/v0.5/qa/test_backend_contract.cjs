@@ -50,8 +50,11 @@ pass(first.snapshot.events.every((ev,i)=>ev.sequence===i),'original ledger event
 pass(first.snapshot.lots.find(l=>l.originLotId).allocatedCostCents===6000,'cost allocation properly mapped');
 pass(first.snapshot.lots.find(l=>l.originLotId).pricePaidCents===null,'transfer cost not duplicated');
 pass(first.snapshot.events.filter(e=>e.transactionId).reduce((sum,e)=>sum+e.delta,0)===0,'transfer event pair balanced');
+pass(first.snapshot.events.filter(e=>e.kind==='transfer_in'||e.kind==='transfer_out').every(e=>e.metadata?.quantity===3),'structured transfer provenance preserved');
 pass(integ.validateLocal(s.eval('db')).length===0,'transferred ledger valid');
 s.click({go:'adjust'});s.submit('adjust-form',{delta:'-1',reason:'Count correction'});
+s.click({go:'edit'});s.submit('edit-form',{acquired:'2025-01-26',price:'',source:'Reconciled',location:'Tray 2',notes:'Corrected',format:'Box',reason:'Entry correction'});
+pass(s.eval('db.events.findLast(e=>e.kind==="Corrected details")?.meta?.after?.source')==='Reconciled','structured before-after audit retained');
 const second=integ.prepareInitialImport(s.eval('db'),opts);
 pass(first.clientMutationId!==second.clientMutationId,'local mutation changes idempotency key');
 pass(first.snapshot.lots[0].id===second.snapshot.lots[0].id,'stable entity id across changes');

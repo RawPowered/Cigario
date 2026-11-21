@@ -82,6 +82,7 @@ function v2Validate(PDO $pdo,array $body):array{
  $balances=array_fill_keys(array_keys($lots),0);$beginnings=array_fill_keys(array_keys($lots),0);$transactions=[];$sequences=[];
  foreach($snap['events'] as $ev){if(!is_array($ev)||!v2Id($ev['id']??null)||isset($events[$ev['id']])||!isset($lots[$ev['lotId']??''])||!v2Iso($ev['occurredAt']??null)||!is_int($ev['sequence']??null)||$ev['sequence']<0||isset($sequences[$ev['sequence']])||!is_int($ev['delta']??null)||abs($ev['delta'])>100000||!v2Text($ev['note']??null,350))v2Reply(422,['error'=>'Invalid stock event']);
   $kind=$ev['kind']??null;if(!in_array($kind,['acquisition','consumed','adjustment','transfer_in','transfer_out','transferred','metadata_updated'],true))v2Reply(422,['error'=>'Unsupported event kind']);
+  if(($ev['metadata']??null)!==null&&(!is_array($ev['metadata'])||strlen((string)json_encode($ev['metadata']))>3000))v2Reply(422,['error'=>'Invalid audit metadata']);
   if(in_array($kind,['transferred','metadata_updated'],true)&&$ev['delta']!==0)v2Reply(422,['error'=>'Metadata event must have zero delta']);
   if($kind==='consumed'&&$ev['delta']!==-1)v2Reply(422,['error'=>'Consumption must be minus one']);
   if($kind==='transfer_in'&&$ev['delta']<=0||$kind==='transfer_out'&&$ev['delta']>=0||$kind==='acquisition'&&$ev['delta']<=0)v2Reply(422,['error'=>'Invalid inventory movement']);
@@ -131,8 +132,8 @@ try{
   $q=$pdo->prepare('INSERT INTO humidors(id,user_id,name,notes) VALUES (?,?,?,?)');foreach($s['humidors'] as $h)$q->execute([$h['id'],$uid,$h['name'],$h['notes']]);
   $q=$pdo->prepare('INSERT INTO lots (id,user_id,cigar_id,humidor_id,origin_lot_id,mutation_id,acquired_at,location,source,quantity_acquired,price_paid_cents,allocated_cost_cents,format,memo) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)');
   foreach($s['lots'] as $l)$q->execute([$l['id'],$uid,$l['cigarId'],$l['humidorId'],$l['originLotId'],$l['id'],$l['acquiredAt'],$l['location'],$l['source'],$l['quantityAcquired'],$l['pricePaidCents'],$l['allocatedCostCents']??null,$l['format'],$l['memo']]);
-  $q=$pdo->prepare('INSERT INTO stock_events(id,user_id,lot_id,mutation_id,delta,kind,occurred_at,note,transaction_id,event_sequence) VALUES (?,?,?,?,?,?,?,?,?,?)');
-  foreach($s['events'] as $ev)$q->execute([$ev['id'],$uid,$ev['lotId'],$ev['id'],$ev['delta'],$ev['kind'],str_replace(['T','Z'],[' ',''],$ev['occurredAt']),$ev['note'],$ev['transactionId'],$ev['sequence']]);
+  $q=$pdo->prepare('INSERT INTO stock_events(id,user_id,lot_id,mutation_id,delta,kind,occurred_at,note,transaction_id,event_sequence,metadata_json) VALUES (?,?,?,?,?,?,?,?,?,?,?)');
+  foreach($s['events'] as $ev)$q->execute([$ev['id'],$uid,$ev['lotId'],$ev['id'],$ev['delta'],$ev['kind'],str_replace(['T','Z'],[' ',''],$ev['occurredAt']),$ev['note'],$ev['transactionId'],$ev['sequence'],$ev['metadata']===null?null:json_encode($ev['metadata'],JSON_UNESCAPED_UNICODE)]);
   $q=$pdo->prepare('INSERT INTO reviews(id,user_id,cigar_id,lot_id,rating,notes,occurred_at,mode,thirds_json,draw_note,construction_note) VALUES (?,?,?,?,?,?,?,?,?,?,?)');
   foreach($s['reviews'] as $r)$q->execute([$r['id'],$uid,$r['cigarId'],$r['lotId'],$r['rating'],$r['notes'],str_replace(['T','Z'],[' ',''],$r['occurredAt']),$r['mode'],$r['thirds']===null?null:json_encode($r['thirds'],JSON_UNESCAPED_UNICODE),$r['draw'],$r['construction']]);
   $pdo->prepare('UPDATE collection_revisions SET revision=1 WHERE user_id=?')->execute([$uid]);

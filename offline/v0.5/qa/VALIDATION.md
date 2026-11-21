@@ -3,7 +3,7 @@
 | Gate | Result | Evidence |
 |---|---|---|
 | V0.4 historical inventory regression | PASS | 18 tests in `android/test_offline_logic.cjs` |
-| Collection mapping, import idempotency, ownership prerequisites, cost allocation | PASS | 28 assertions in `qa/test_backend_contract.cjs` |
+| Collection mapping, import idempotency, ownership prerequisites, cost allocation | PASS | 30 assertions in `qa/test_backend_contract.cjs` |
 | Offline zero automatic network requests | PASS | Contract harness throws on any attempted fetch |
 | Readiness UI and no horizontal overflow | PASS | Playwright in-memory app at 320/390/430 px |
 | JS syntax | PASS | `node --check app.js integration/*.js service-worker.js` |

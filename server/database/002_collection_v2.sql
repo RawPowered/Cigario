@@ -23,7 +23,8 @@ ALTER TABLE lots
 ALTER TABLE stock_events
   MODIFY kind ENUM('acquisition','consumed','adjustment','transfer_in','transfer_out','transferred','metadata_updated') NOT NULL,
   ADD COLUMN transaction_id CHAR(36) NULL,
-  ADD COLUMN event_sequence INT UNSIGNED NULL;
+  ADD COLUMN event_sequence INT UNSIGNED NULL,
+  ADD COLUMN metadata_json LONGTEXT NULL;
 
 ALTER TABLE reviews
   ADD COLUMN occurred_at DATETIME NULL,

@@ -8,7 +8,7 @@
 - A local readiness report and complete JSON backup that includes identifier mappings (never credentials).
 - An **opt-in, non-invoked** HTTPS client, requiring authenticated user identity, curated catalog matches and explicit import approval.
 - An additive MariaDB migration (`backend/database/002_collection_v2.sql`) and authenticated PHP V2 **initial-import** endpoint with dry-run preview, per-user ownership, idempotency, history-preserving transactional import, negative-stock checks and optimistic revision safeguards.
-- Corrected split-transfer cost semantics: original paid cost is not duplicated on child lots; an allocated transfer basis is recorded separately.
+- Structured before/after audit metadata for acquisition corrections and transfers; corrected split-transfer cost semantics: original paid cost is not duplicated on child lots; an allocated transfer basis is recorded separately.
 - Unknown catalog IDs no longer silently open the first cigar. Null MSRP displays as unavailable. A future verified catalog adapter hook is present but never automatically loads external data.
 - Updated experimental offline Android packaging to embed the integration scripts; no INTERNET permission.
 

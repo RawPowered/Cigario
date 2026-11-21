@@ -47,6 +47,7 @@ function validateLocal(local){const failures=[];
  for(const l of local.lots)if(l.originLotId&&!sets.lot.has(l.originLotId))failures.push('Transfer references missing source lot');
  const balances=Object.fromEntries(local.lots.map(l=>[l.id,0]));
  for(const ev of local.events){if(!ev||typeof ev.id!=='string'||sets.event.has(ev.id)||!sets.lot.has(ev.lotId)||!Number.isSafeInteger(ev.delta)||Math.abs(ev.delta)>100000||!TYPES[ev.kind]||!validText(ev.source||'',350)||!/^[0-9]{4}-[0-9]{2}-[0-9]{2}$/.test(ev.date))failures.push('Invalid or duplicate stock event');else {sets.event.add(ev.id);balances[ev.lotId]+=ev.delta;}}
+ if(local.events.some(ev=>ev.meta!==undefined&&(typeof ev.meta!=='object'||ev.meta===null||JSON.stringify(ev.meta).length>3000)))failures.push('Invalid audit metadata');
  if(Object.values(balances).some(x=>x<0))failures.push('Negative stock exists');
  for(const rev of local.reviews){if(!rev||typeof rev.id!=='string'||sets.review.has(rev.id)||!sets.lot.has(rev.lotId)||!Number.isInteger(rev.rating)||rev.rating<1||rev.rating>5||!validText(rev.text,1500)||!['quick','detailed'].includes(rev.mode||'quick'))failures.push('Invalid or duplicate journal entry');else sets.review.add(rev.id);}
  return [...new Set(failures)];
@@ -72,7 +73,7 @@ function prepareInitialImport(local,{ownerId,serverCatalogIds,confirmed=false,ex
  const snapshot={
   humidors:local.humidors.map(h=>({id:uuidOf('humidor',h.id),name:h.name,notes:h.notes||''})),
   lots:local.lots.map(l=>({id:uuidOf('lot',l.id),cigarId:state.catalogMap[l.cigarId],humidorId:uuidOf('humidor',l.humidorId),originLotId:l.originLotId?uuidOf('lot',l.originLotId):null,acquiredAt:l.acquired,quantityAcquired:l.qty,location:l.location,source:l.source,pricePaidCents:l.originLotId?null:l.price,allocatedCostCents:l.allocatedCost??(l.originLotId?l.price:null),format:l.format,memo:l.notes||''})),
-  events:local.events.map((ev,sequence)=>({id:uuidOf('event',ev.id),lotId:uuidOf('lot',ev.lotId),transactionId:ev.tx?uuidOf('tx',ev.tx):null,sequence,kind:TYPES[ev.kind],delta:ev.delta,occurredAt:ev.date+'T12:00:00Z',note:ev.source||''})),
+  events:local.events.map((ev,sequence)=>({id:uuidOf('event',ev.id),lotId:uuidOf('lot',ev.lotId),transactionId:ev.tx?uuidOf('tx',ev.tx):null,sequence,kind:TYPES[ev.kind],delta:ev.delta,occurredAt:ev.date+'T12:00:00Z',note:ev.source||'',metadata:ev.meta||null})),
   reviews:local.reviews.map(r=>({id:uuidOf('review',r.id),lotId:uuidOf('lot',r.lotId),cigarId:state.catalogMap[r.cigarId],occurredAt:r.date+'T12:00:00Z',rating:r.rating,notes:r.text,mode:r.mode||'quick',thirds:r.thirds||null,draw:r.draw||null,construction:r.construction||null}))
  };
  setState(state);

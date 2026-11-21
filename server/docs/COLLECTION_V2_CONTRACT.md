@@ -21,6 +21,7 @@ The **backend owns all authenticated customer records**. The offline app owns on
 | `events[].kind` | `events[].kind` | `stock_events.kind` | Acquisition, consumed, adjustment, transfer_in/out, transferred, metadata_updated |
 | `events[].tx` | UUID `events[].transactionId` | `stock_events.transaction_id` | Paired split transfers must net to zero |
 | `events[].source` | `events[].note` | `stock_events.note` | User-entered reason, **not independent proof** |
+| `events[].meta` | `events[].metadata` | `stock_events.metadata_json` | Structured before/after edits and transfer provenance; new events only |
 | `reviews[].text` | `reviews[].notes` | `reviews.notes` | User-private journal |
 | `reviews[].thirds` | `reviews[].thirds` | `reviews.thirds_json` | Optional advanced journal sections |
 
