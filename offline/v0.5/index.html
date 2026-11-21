@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#101a15">
+<meta name="color-scheme" content="dark light">
+<meta name="description" content="Cigario offline humidor studio. Private inventory and tasting journal for adults 21+. Fictional demonstration records.">
+<title>Cigario Atelier · My Humidor</title>
+<link rel="manifest" href="manifest.webmanifest">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<link rel="apple-touch-icon" href="assets/app-icon.png">
+<link rel="icon" href="assets/app-icon.png" type="image/png">
+<link rel="stylesheet" href="app.css">
+</head>
+<body>
+<div id="app" role="application" aria-label="Cigario offline demo"></div>
+<script src="integration/contract.js" defer></script>
+<script src="integration/client.js" defer></script>
+<script src="app.js" defer></script>
+<script>if (location.protocol === "https:" && "serviceWorker" in navigator) navigator.serviceWorker.register("service-worker.js").catch(()=>{});</script>
+</body>
+</html>

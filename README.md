@@ -55,3 +55,9 @@ The standalone, no-hosting, no-network application source, image assets, tests a
 The latest **offline luxury visual pass** is under [`offline/v0.4/`](offline/v0.4/README.md). It preserves the forest/ivory/bronze design contract and V0.3 data model while enhancing imagery, typography, visual hierarchy, tactile controls, focus states and a thumb-reach action dock on the catalog detail and acquisition screens. It includes Android experimental packaging source, an offline web/PWA entry, regression tests and browser visual QA.
 
 **Status:** offline demonstrator, not a released native iPhone/Android application. Real-device visual fidelity and install tests remain pending. The broader React/Capacitor production implementation under `src/` still requires consolidation with the offline test shell.
+
+## Backend-ready offline V0.5 (source and secure import contract)
+
+[`offline/v0.5/`](offline/v0.5/README.md) retains the approved luxury offline UI while adding stable server UUID mapping, a local-only revision journal, explicit catalog reconciliation, and an opt-in HTTPS adapter that **does not make automatic requests**. `server/database/002_collection_v2.sql` and `server/public/api/v2/` add an authenticated, idempotent **initial-import-only** endpoint for complete humidors, provenance events and advanced reviews.
+
+This is **not a deployed backend or live device sync**. Verified catalog, account/security setup, MariaDB integration tests, replay/conflict resolution, React/Capacitor consolidation and physical-device qualification remain required. See [`docs/BACKEND_READY_V05.md`](docs/BACKEND_READY_V05.md).
